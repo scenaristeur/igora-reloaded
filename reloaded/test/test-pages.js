@@ -70,8 +70,7 @@ describe("Igora Reloaded API", () => {
             expect(content).to.equal("Salut! Comment allez-vous?");
             done();
           });
-      })
-      //.timeout(10000);
+      }).timeout(5000);
 
       it("completion stream", (fini) => {
         let result = "";
@@ -106,7 +105,6 @@ describe("Igora Reloaded API", () => {
                                 //console.log('Stream finished');
                                 result = result.trim()
                                 //console.log(result);
-                                // Salut! Comment allez-vous?
                                 expect(result).to.be.a("string");
                                 expect(result).to.equal("Salut! Comment allez-vous?");
                                 fini()
@@ -150,11 +148,6 @@ describe("Igora Reloaded API", () => {
                 // Log the error
                 console.error(error);
             });
-        
-
-
-
-      })
-      //.timeout(10000);
+      }).timeout(5000);
     });
 });
