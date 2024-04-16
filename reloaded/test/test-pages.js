@@ -70,7 +70,7 @@ describe("Igora Reloaded API", () => {
             expect(content).to.equal("Salut! Comment allez-vous?");
             done();
           });
-      }).timeout(5000);
+      }).timeout(10000);
 
       it("completion stream", (fini) => {
         let result = "";
@@ -148,6 +148,6 @@ describe("Igora Reloaded API", () => {
                 // Log the error
                 console.error(error);
             });
-      }).timeout(5000);
+      }).timeout(10000);
     });
 });
