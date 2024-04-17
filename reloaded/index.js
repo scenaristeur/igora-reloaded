@@ -48,7 +48,7 @@ app.post("/v1/chat/completions", express.json(), async (req, res) => {
               // Convert the chunk value to a string
               const chunkString = new TextDecoder().decode(value);
               // Log the chunk string
-              console.log(chunkString);
+              //console.log(chunkString);
               res.write(chunkString);
               // Read the next chunk
               readChunk();

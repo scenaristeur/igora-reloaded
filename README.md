@@ -6,6 +6,8 @@ graph LR
     A[Chat interface] --> B(API)
     B --> C(llama-cpp-python)
     C --> D[dolphin]
+    C --> M[Starcoder2 3B]
+    I --> M[Starcoder2 3B]
     C --> E[llama2]
     F[LibreOffice] --> B
     G[Appli métier X] --> B
@@ -17,6 +19,8 @@ graph LR
     B --auth--> J{annuaire}
     B --historique --> K{VectorDB}
     B --> L{Données Métier}
+
+
 
 ```
 
