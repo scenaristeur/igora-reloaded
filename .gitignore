@@ -1,3 +1,7 @@
 .venv
 *.gguf
 node_modules
+__pycache__
+chroma_data
+chroma.log
+db
