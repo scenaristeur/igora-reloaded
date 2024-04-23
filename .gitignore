@@ -1,4 +1,11 @@
 .venv
 *.gguf
 node_modules
+<<<<<<< HEAD
 .env
+=======
+__pycache__
+chroma_data
+chroma.log
+db
+>>>>>>> 0984f8a836583d10daa77de678de0c5fd5758808

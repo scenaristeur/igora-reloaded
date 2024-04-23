@@ -31,3 +31,14 @@ curl --noproxy '*' -X 'POST' \
   ]
 }'
 ```
+
+```
+// format req:
+  // action: String, Action that LLM should do with the user text
+  // text: String, This is the request from the user to LLM
+  // userProfile: String, SIE, SIP, Dev
+  // applicationProfile: String
+  // model: list, list of models of LLMs
+  // temperature: integer
+  // systemPrompt: String
+  ```
