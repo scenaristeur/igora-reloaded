@@ -17,7 +17,7 @@ graph LR
     I --> E
     
     B --auth--> J{annuaire}
-    B --historique --> K{VectorDB}
+    B --historique --> K{Similarity}
     B --> L{Données Métier}
 
 
