@@ -8,8 +8,15 @@ from langchain.text_splitter import CharacterTextSplitter
 # from langchain_community.chat_models import ChatOpenAI
 # from langchain_community.vectorstores import Chroma
 import chromadb
+import dcf
 
-def load_chunk_persist_pdf():
+COLLECTION_NAME = "pdf_collection"
+HOST = "localhost"
+PORT = 8000
+
+chroma_server_client = chromadb.HttpClient(host='localhost', port='8001')
+
+def create_pdf_collection(collection_name: str = COLLECTION_NAME):
     pdf_folder_path = "/home/stag/igora-reload/similarity/fromPDF/documentsPDF"
     documents = []
 
@@ -23,23 +30,37 @@ def load_chunk_persist_pdf():
     text_splitter = CharacterTextSplitter(separator="\n", chunk_size=1000, chunk_overlap=200)
     chunked_documents = text_splitter.split_documents(documents)
 
-    id_chunked_docs = [str(x) for x in list(range(len(chunked_documents)))]
+    if chunked_documents:
+        id_chunked_docs = [str(x) for x in list(range(len(chunked_documents)))]
 
-    client = chromadb.Client()
-    test_collection = client.get_or_create_collection("pdf_collection")
+        #client = chromadb.Client()
+        test_collection = chroma_server_client.get_or_create_collection(collection_name)
 
-    test_collection.add(
-        documents = [element.page_content for element in chunked_documents],
-        ids = id_chunked_docs
+        test_collection.add(
+            documents = [element.page_content for element in chunked_documents],
+            ids = id_chunked_docs
+        )
+        
+        print(f"collection: {collection_name}, created")
+        dcf.update_list(dcf.get_folder_pdf())
+    else:
+        print(f'No pdf files in folder: {collection_name} not created')
+
+
+
+def delete_pdf_collection(collection_name: str = COLLECTION_NAME):
+    # client = chromadb.Client()
+    chroma_server_client.delete_collection(name=collection_name)
+
+
+def query_pdf_collection(text: str, result_number: int = 5, collection_name: str = COLLECTION_NAME):
+    # client = chromadb.Client()
+    pdf_collection = chroma_server_client.get_or_create_collection(collection_name)
+
+    results = pdf_collection.query(
+        query_texts = text,
+        n_results = result_number
     )
-
-
-    results = test_collection.query(
-        query_texts="e locaux à fort enjeu \xa0dans le cadre des restructurations de services des tribunaux judiciaires de \nNanterre et Versailles ainsi que, plus globalement, la couverture de durées d'engagement plus longues des baux \nnégociés par les services des domaines ;\n•l'engagement des marchés de maintenance pris dans le cadre des marchés globaux de performance pour la \nconstruction ou la réhabilitation des palais de justice de Cayenne, de Saint-Laurent-du-Maroni (Guyane) et Saint-\nMartin (Antilles françaises) ;\n•le réengagement des marchés interministériels d'électricité et de gaz pour la période d'approvisionnement 2022-\n2023.\nLes crédits de paiement sont préservés par rapport à une dépense",
-        n_results=2
-    )
-
-
     return results
 
 
@@ -53,7 +74,8 @@ def print_results(results, n_query):
         print('\n\n')
         i+=1
 
-if __name__ == "__main__":
 
-    test_var = load_chunk_persist_pdf()
-    print_results(test_var, 2)
+
+if __name__ == "__main__":
+    create_pdf_collection()
+

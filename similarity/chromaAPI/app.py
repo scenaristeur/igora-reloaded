@@ -4,6 +4,10 @@ import uvicorn
 from fastapi import FastAPI
 from user.user import User
 from operator import attrgetter
+import sys
+
+sys.path.append('../fromPDF')
+from initialise import query_pdf_collection
 
 app = FastAPI()
 chroma_client = chromadb.HttpClient(host="localhost", port=8001)
@@ -67,6 +71,13 @@ async def send_user(user: User):
 
     return message
 
+@app.post("/pdf_search")
+async def query_pdf(user: User):
+    u_id ,u_chat_id, u_profile, u_platform, u_data = attrgetter('u_id', 'u_chat_id', 'u_profile', 'u_platform', 'u_data')(user)
+
+
+    return query_pdf_collection(u_data)
+
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8001)
+    uvicorn.run(app, host="localhost", port=8000)

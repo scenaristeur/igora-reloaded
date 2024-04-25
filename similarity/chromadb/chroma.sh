@@ -11,4 +11,5 @@ fi
 
 export ANONYMIZED_TELEMETRY=False && chroma run --host "$HOST" --port "$PORT"
 
+
 exit 0
