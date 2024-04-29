@@ -2,8 +2,8 @@ import "dotenv/config";
 import express from "express";
 import { ChatCompletionResponse } from "./ChatCompletionResponse/index.js";
 // console.log(process.env)
-const port = process.env.PORT || 5678;
-const llama_port = process.env.LLAMA_CPP_PORT || 8000;
+const port = process.env.API_PORT //|| 5678;
+const llama_port = process.env.LLAMA_CPP_PORT //|| 8000;
 
 const app = express();
 
