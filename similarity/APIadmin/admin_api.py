@@ -31,13 +31,28 @@ def is_admin(username: str, password: str) -> bool:
     return True
 
 
-@router.post("/admin")
+@router.post("/admin/create_pdf_collection")
 async def create_collection(user: datas.User):
 
     username, password = attrgetter("username", "password")(user)
+    print(f'username: {username}, password: {password}')
 
     if is_admin(username, password):
-        result = chroma_methods.create_pdf_collection(PDF_FOLDER_PATH, PDF_COLLECTION_NAME, chroma_client)
+
+        result = await chroma_methods.create_pdf_collection(PDF_FOLDER_PATH, PDF_COLLECTION_NAME, chroma_client)
         return result
 
+    return {"403": f"{user} has no admin rights"}
+
+@router.post("/admin/delete_pdf_collection")
+async def delete_collection(user: datas.User):
+
+    username, password = attrgetter("username", "password")(user)
+    print(f'username: {username}, password: {password}')
+
+    if is_admin(username, password):
+        
+        chroma_client.delete_collection(name=PDF_COLLECTION_NAME)
+        return {"200": f"Collection {PDF_COLLECTION_NAME}: deleted"}
+    
     return {"403": f"{user} has no admin rights"}

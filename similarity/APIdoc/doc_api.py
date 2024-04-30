@@ -12,6 +12,7 @@ load_dotenv()
 CHROMA_DB_HOST = os.getenv("CHROMA_DB_HOST")
 CHROMA_DB_PORT = os.getenv("CHROMA_DB_PORT")
 NUMBER_RESULTS = int(os.getenv("RESULT_NUMBER"))
+PDF_COLLECTION_NAME = os.getenv("PDF_COLLECTION_NAME")
 
 router = APIRouter()
 chroma_server_client = chromadb.HttpClient(host=CHROMA_DB_HOST, port=CHROMA_DB_PORT)
@@ -20,6 +21,6 @@ chroma_server_client = chromadb.HttpClient(host=CHROMA_DB_HOST, port=CHROMA_DB_P
 async def query_pdf_collection(data: query.PDFQuery):
 
     text_query = attrgetter("data")(data)
-    results = await chroma_methods.pdf_query(text_query, NUMBER_RESULTS, chroma_server_client)
+    results = await chroma_methods.pdf_query(text_query, NUMBER_RESULTS, PDF_COLLECTION_NAME, chroma_server_client)
 
     return results

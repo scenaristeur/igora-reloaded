@@ -129,16 +129,34 @@ async def pdf_query(search_data: str, number_results: int, collection_name: str,
 
 async def create_pdf_collection(pdf_folder: str , collection_name: str, chroma_client: chromadb.HttpClient):
 
-    chunked_documents = split_pdfs(collection_name)
+    print(f'pdf path: {pdf_folder}')
+    print(f'pdf collection: {collection_name}')
 
+    chunked_documents = split_pdfs(pdf_folder)
+    print('chunked documents done')
     if chunked_documents:
         id_chunked_docs = [str(x) for x in list(range(len(chunked_documents)))]
 
         test_collection = chroma_client.get_or_create_collection(collection_name)
 
+        print(type(chunked_documents))
+        print(type(id_chunked_docs))
+        print (chunked_documents[0])
+        print(type(chunked_documents[0]))
+        print('\n\n')
+        print (chunked_documents[1].page_content)
+        print (chunked_documents[1].metadata)
+        print('\n\n')
+        print (chunked_documents[2].page_content)
+        print (chunked_documents[2].metadata)
+        print('\n\n')
+        print (chunked_documents[3].page_content)
+        print (chunked_documents[3].metadata)
+
         test_collection.add(
-            documents=[element.page_content for element in chunked_documents],
-            ids=id_chunked_docs,
+            documents = [element.page_content for element in chunked_documents],
+            metadatas = [element.metadata for element in chunked_documents],
+            ids = id_chunked_docs,
         )
         return {"200": f"Collection {collection_name}: added"}
     else:
