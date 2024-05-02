@@ -13,10 +13,12 @@ class Data(BaseModel):
 
 class PDFQuery(BaseModel):
     """format of pdf's POST query"""
+
     data: str
 
 
 class User(BaseModel):
     """Format of user"""
+
     username: str
     password: str

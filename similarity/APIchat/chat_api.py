@@ -25,38 +25,26 @@ chroma_client = chromadb.HttpClient(host=CHROMA_DB_HOST, port=CHROMA_DB_PORT)
 
 @router.post("/add")
 async def add_data(user_request: datas.Data) -> dict:
-    user_id, metadata, data_to_add = attrgetter("user_id", "metadata", "data")(user_request)
+    user_id, metadata, data_to_add = attrgetter("user_id", "metadata", "data")(
+        user_request
+    )
 
-    return_message = await chroma_methods.add_data(user_id, metadata, data_to_add, chroma_client)
+    return_message = await chroma_methods.add_data(
+        user_id, metadata, data_to_add, chroma_client
+    )
     return return_message
 
 
 @router.post("/search")
 async def query_db(user_request: datas.Data):
-    user_id, metadata, query_data = attrgetter("user_id", "metadata", "data")(user_request)
-    print(user_id)
-    print(metadata)
-    print(query_data)
+    user_id, metadata, query_data = attrgetter("user_id", "metadata", "data")(
+        user_request
+    )
 
-    results = await chroma_methods.chroma_query(user_id, metadata, query_data, NUMBER_RESULTS, chroma_client)
-    print(f'resultats: {results}')
+    results = await chroma_methods.chroma_query(
+        user_id, metadata, query_data, NUMBER_RESULTS, chroma_client
+    )
+    print(f"resultats: {results}")
     return results
 
-# @router.post("/pdf_search")
-# async def query_pdf(user: User):
-#     user_id, chat_id, profile, platform, data = attrgetter(
-#         "u_id", "u_chat_id", "u_profile", "u_platform", "u_data"
-#     )(user)
-#     new_user = User(user_id, chat_id, profile, platform, data)
-#     return query_pdf_collection(new_user, NUMBER_RESULTS, chroma_client)
-#     # return new_user
 
-
-# @router.post("/test")
-# async def test_fonc(user: User):
-
-#     user_id, chat_id, profile, platform, data = attrgetter(
-#         "u_id", "u_chat_id", "u_profile", "u_platform", "u_data"
-#     )(user)
-#     pnew_user = User(user_id, chat_id, profile, platform, data)
-#     return {"message": pnew_user}
