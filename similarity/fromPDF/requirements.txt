@@ -1,4 +1,0 @@
-chromadb
-langchain
-pypdf
-langchain_community

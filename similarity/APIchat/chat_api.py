@@ -44,7 +44,6 @@ async def query_db(user_request: datas.Data):
     results = await chroma_methods.chroma_query(
         user_id, metadata, query_data, NUMBER_RESULTS, chroma_client
     )
-    print(f"resultats: {results}")
     return results
 
 
