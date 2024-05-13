@@ -42,7 +42,7 @@ cd backEndTest # si on n'est pas déjà dans le dossier backEndTest
 #python3 -m llama_cpp.server --model ./models/dolphin-2.2.1-mistral-7b.Q2_K.gguf 
 #ou si le port est déjà utilisé python3 -m llama_cpp.server --model ./models/dolphin-2.2.1-mistral-7b.Q2_K.gguf --port 5677 --host 0.0.0.0
 # ou 
-python3 -m llama_cpp.server --model ./models/llama-pro-8b-instruct.Q2_K.gguf --port 5677
+python3 -m llama_cpp.server --model ./models/llama-pro-8b-instruct.Q2_K.gguf --port 5678
 # ou lancer igora
 ```
 
